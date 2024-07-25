@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, AfterViewInit  } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RegistroCursosComponent } from '../registro-cursos/registro-cursos.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { CursosService } from 'src/app/services/cursos.service';
+import { CursosService } from '../../services/cursos.service'; 
 import { VerCursosComponent } from '../ver-cursos/ver-cursos.component';
 import { InhabilitarCursosComponent } from '../inhabilitar-cursos/inhabilitar-cursos.component';
 import { EditarCursosComponent } from '../editar-cursos/editar-cursos.component';
-
+import { Curso } from '../../models/curso.module';
 
 @Component({
   selector: 'app-listado-cursos',
@@ -15,107 +15,73 @@ import { EditarCursosComponent } from '../editar-cursos/editar-cursos.component'
   styleUrls: ['./listado-cursos.component.css']
 })
 export class ListadoCursosComponent implements OnInit, AfterViewInit {
-  cursos: any[] = [];
-  displayedColumns: string[] = ['id','nombre','descripcion', 'cupo','horario', 'profesor', 'estado','fechaCreacion', 'acciones'];
-  dataSource = new MatTableDataSource<any>(this.cursos);
+  cursos: Curso[] = [];
+  displayedColumns: string[] = ['id', 'nombre', 'semestre', 'descripcion', 'fechaCreacion', 'acciones'];
+  dataSource = new MatTableDataSource<Curso>(this.cursos);
 
   constructor(
-    private cursosService:CursosService,
+    private cursosService: CursosService,
     public dialog: MatDialog
-  ){}
+  ) {}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
-    this.cursosService.obtenerCursos().subscribe({
-      next:(response: any) => {
-        this.cursos = response.data;
-        this.dataSource = new MatTableDataSource<any>(this.cursos);
-        this.dataSource.paginator = this.paginator;
-      },
-      error:(error) => {
-        console.log(error);
-      }
-  });
+    this.cargarCursos();
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+  cargarCursos() {
+    this.cursosService.obtenerCursos().subscribe({
+      next: (response: Curso[]) => {
+        this.cursos = response;
+        this.dataSource.data = this.cursos;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
   abrirDialogoRegistro() {
-    const dialogRef = this.dialog.open(RegistroCursosComponent,{
-      width: '500px',
-     //height: '600px'
+    const dialogRef = this.dialog.open(RegistroCursosComponent, {
+      width: '500px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
-      this.cursosService.obtenerCursos().subscribe({
-       next: (response: any) => {
-          this.cursos = response.data;
-          this.dataSource = new MatTableDataSource<any>(this.cursos);
-          this.dataSource.paginator = this.paginator;
-        },
-       error: (error) => {
-          console.log(error);
-        }
-    });
-      
+      this.cargarCursos();
     });
   }
 
-  verCurso(curso: number) {
-    
-    const dialogRef = this.dialog.open(VerCursosComponent,{
+  verCurso(idCurso: number) {
+    const dialogRef = this.dialog.open(VerCursosComponent, {
       width: '500px',
-      data: {id: curso}
+      data: { id: idCurso }
     });
-
   }
 
-
-  abrirDialogoEditar(curso: number) {
-    const dialogRefEdit = this.dialog.open(EditarCursosComponent,{
+  abrirDialogoEditar(idCurso: number) {
+    const dialogRefEdit = this.dialog.open(EditarCursosComponent, {
       width: '500px',
-      data: {id: curso}
+      data: { id: idCurso }
     });
 
     dialogRefEdit.afterClosed().subscribe(result => {
-      
-      this.cursosService.obtenerCursos().subscribe(
-        (response: any) => {
-          this.cursos = response.data;
-          this.dataSource = new MatTableDataSource<any>(this.cursos);
-          this.dataSource.paginator = this.paginator;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-      
+      this.cargarCursos();
     });
   }
 
-  inhabilitarCurso(curso: number) {
-    const dialogRefInh = this.dialog.open(InhabilitarCursosComponent,{
+  inhabilitarCurso(idCurso: number) {
+    const dialogRefInh = this.dialog.open(InhabilitarCursosComponent, {
       width: '500px',
-      data: {id: curso}
+      data: { id: idCurso }
     });
 
     dialogRefInh.afterClosed().subscribe(result => {
-      console.log('Recargando tabla');
-      this.cursosService.obtenerCursos().subscribe(
-        (response: any) => {
-          this.cursos = response.data;
-          this.dataSource = new MatTableDataSource<any>(this.cursos);
-          this.dataSource.paginator = this.paginator;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-      
+      this.cargarCursos();
     });
-
   }
-
 }

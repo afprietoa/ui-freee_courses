@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CursosService } from 'src/app/services/cursos.service';
+import { CursosService } from '../../services/cursos.service'; 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Curso } from '../../models/curso.module';
 
 @Component({
   selector: 'app-editar-cursos',
@@ -18,69 +18,59 @@ export class EditarCursosComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<EditarCursosComponent>
   ) {
-
     this.editForm = this.formBuilder.group({
-      id: [''],
-      nombre:['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚ.,-_ñÑ ]*$')]],
-      descripcion:['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚ.,-_ñÑ ]*$')]],
-      cupo:['', [Validators.required, Validators.minLength(1), Validators.maxLength(2), Validators.pattern('^[0-9]*$')]],
-      horario:['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚ.,-_ñÑ ]*$')]],
-      profesor:['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚ.,-_ñÑ ]*$')]]
+      idCurso: [''],
+      nombre: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚ.,-_ñÑ ]*$')]],
+      descripcion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚ.,-_ñÑ ]*$')]],
+      Semestre: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+      fechaCreacion: ['', [Validators.required]],
     });
   }
 
   ngOnInit(): void {
-     const curso = this.data.id;
-     
-    this.cursosService.consultarCurso(curso).subscribe({
-      next:(response: any) => {
-        
-        const cursoData = response.data[0];
-        console.log(cursoData);
-        
-
-        this.editForm.setValue({
-          id: cursoData.curso_id,
-          nombre: cursoData.curso_nombre,
-          descripcion: cursoData.curso_descripcion,
-          cupo: cursoData.curso_cupo,
-          horario: cursoData.curso_horario,
-          profesor: cursoData.curso_profesor,
-        });
+    const cursoId = this.data.id;
+    
+    this.cursosService.consultarCurso(cursoId).subscribe({
+      next: (curso: Curso | undefined) => {
+        if (curso) {
+          this.editForm.setValue({
+            idCurso: curso.idCurso,
+            nombre: curso.nombre,
+            descripcion: curso.descripcion,
+            Semestre: curso.Semestre,
+            fechaCreacion: curso.fechaCreacion,
+          });
+        } else {
+          console.error('Curso no encontrado');
+        }
       },
-      error:(error) => {
-        console.log(error);
+      error: (error) => {
+        console.error(error);
       }
     });
-
-    
-    
-    
   }
 
-
   onSubmit(): void {
-    
-    if(this.editForm.valid){
-      const curso = {
+    if (this.editForm.valid) {
+      const curso: Curso = {
+        idCurso: this.editForm.value.idCurso,
         nombre: this.editForm.value.nombre,
         descripcion: this.editForm.value.descripcion,
-        cupo: Number(this.editForm.value.cupo),
-        horario: this.editForm.value.horario,
-        profesor: this.editForm.value.profesor
-      }
+        Semestre: this.editForm.value.Semestre,
+        fechaCreacion: this.editForm.value.fechaCreacion,
+      };
 
-      this.cursosService.actualizarCurso(this.editForm.value.id, curso).subscribe({
+      this.cursosService.actualizarCurso(curso.idCurso, curso).subscribe({
         next: (response: any) => {
           alert('Curso actualizado correctamente');
           this.dialogRef.close();
         },
         error: (error: any) => {
-          console.log(error);
+          console.error('Error al actualizar el curso', error);
         }
       });
+    } else {
+      this.editForm.markAllAsTouched();
     }
-
-
   }
 }

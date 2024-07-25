@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { CursosService } from '../services/cursos.service'; 
 
 @NgModule({
   declarations: [
@@ -37,6 +37,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ReactiveFormsModule,
     MatIconModule,
     MatTooltipModule,
-  ]
+  ],
+  providers: [CursosService]
 })
 export class CursosModule { }
