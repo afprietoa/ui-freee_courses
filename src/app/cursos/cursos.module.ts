@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CursosService } from '../services/cursos.service'; 
+import { CursosService } from '../services/cursos.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { CursosService } from '../services/cursos.service';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
@@ -34,9 +35,8 @@ import { CursosService } from '../services/cursos.service';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule,
     MatIconModule,
-    MatTooltipModule,
+    MatTooltipModule
   ],
   providers: [CursosService]
 })

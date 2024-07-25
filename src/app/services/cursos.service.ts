@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Curso } from '../models/curso.module';
+import { courses } from '../../assets/static/courses';  // Importa el array de cursos
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,20 @@ import { Curso } from '../models/curso.module';
 export class CursosService {
   private localStorageKey = 'cursos';
 
-  constructor() { }
+  constructor() {
+    this.initializeLocalStorage();
+  }
+
+  // Inicializa localStorage con los cursos si está vacío
+  private initializeLocalStorage(): void {
+    if (!localStorage.getItem(this.localStorageKey)) {
+      this.saveCursosToLocalStorage(courses);
+    }
+  }
 
   private getCursosFromLocalStorage(): Curso[] {
     const cursos = localStorage.getItem(this.localStorageKey);
+    console.log(cursos);
     return cursos ? JSON.parse(cursos) : [];
   }
 
@@ -21,6 +32,7 @@ export class CursosService {
 
   obtenerCursos(): Observable<Curso[]> {
     const cursos = this.getCursosFromLocalStorage();
+    console.log(cursos);
     return of(cursos);
   }
 

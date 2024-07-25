@@ -1,9 +1,33 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CursosService } from 'src/app/services/cursos.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CursosService } from '../../services/cursos.service'; 
 
 @Component({
   selector: 'app-inhabilitar-cursos',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatTooltipModule
+  ],
   templateUrl: './inhabilitar-cursos.component.html',
   styleUrls: ['./inhabilitar-cursos.component.css']
 })
@@ -20,12 +44,8 @@ export class InhabilitarCursosComponent implements OnInit{
   ngOnInit(): void {
     const id = this.data.id;
 
-    const curso = {
-      estado: 'Inactivo'
-    }
-
     
-   this.cursosService.inhabilitarCurso(id, curso).subscribe({
+   this.cursosService.inhabilitarCurso(id).subscribe({
      next: (response: any) => {
        
       console.log(response);
