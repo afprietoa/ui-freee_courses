@@ -1,0 +1,61 @@
+<div class="div_botones">
+    <button mat-raised-button color="primary" (click)="abrirDialogoRegistro()">Registrar cursos</button>
+</div>
+<div class="div_tabla">
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let curso">{{curso.curso_id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let curso">{{curso.curso_nombre}}</td>
+        </ng-container>
+        <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+            <td mat-cell *matCellDef="let curso">{{curso.curso_descripcion}}</td>
+        </ng-container>
+        <ng-container matColumnDef="cupo">
+            <th mat-header-cell *matHeaderCellDef>Cupo</th>
+            <td mat-cell *matCellDef="let curso">{{curso.curso_cupo}}</td>
+        </ng-container>
+        <ng-container matColumnDef="horario">
+            <th mat-header-cell *matHeaderCellDef>Horario</th>
+            <td mat-cell *matCellDef="let curso">{{curso.curso_horario}}</td>
+        </ng-container>
+        <ng-container matColumnDef="profesor">
+            <th mat-header-cell *matHeaderCellDef>Profesor</th>
+            <td mat-cell *matCellDef="let curso">{{curso.curso_profesor}}</td>
+        </ng-container>
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+            <td mat-cell *matCellDef="let curso"> {{curso.curso_estado}} </td>
+        </ng-container>
+        <ng-container matColumnDef="fechaCreacion">
+            <th mat-header-cell *matHeaderCellDef>fehcaCreacion</th>
+            <td mat-cell *matCellDef="let curso">{{curso.curso_fechaCreacion}}</td>
+        </ng-container>
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let curso">
+                <button mat-icon-button matTooltip="Ver Curso" (click)="verCurso(curso.curso_id)">
+                    <mat-icon fontIcon ="visibility" style="color: blue;"> 
+                    </mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Editar Curso"  (click)="abrirDialogoEditar(curso.curso_id)">
+                    <mat-icon fontIcon ="edit" style="color: chocolate;">            
+                    </mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Inhabilitar Curso" (click)="inhabilitarCurso(curso.curso_id)">
+                    <mat-icon fontIcon ="person_remove" style="color: red;">  
+                    </mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 30, 50, 100]"
+    showFirstLastButtons>
+    </mat-paginator>
+    </div>
