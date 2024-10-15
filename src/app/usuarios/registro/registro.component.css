@@ -1,0 +1,220 @@
+.vh-100 {
+    height: 100vh;
+    width: 100vw;
+  }
+  .container-fluid {
+    padding: 0;
+  }
+  .background-degrade {
+    background: linear-gradient(to right, #113951 0%, #285A82 33%, #4077BC 100%);
+  }
+  .title-login {
+    font-weight: bold;
+    color: #113951;
+    font-size: 2.5rem;
+    text-align: center; 
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.125em 1.625em 1.425em 1.625em;
+    border: 2px solid #113951;
+    border-radius: 10%;
+    width: 80%;
+    margin: auto;
+  }
+  
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .login-wrapper {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .login-wrapper h2 {
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: #0d3c61;
+  }
+  .login-logo {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 50px;
+    background: white;
+    border-radius: 10%;
+    text-align: center;
+  }
+  .login-logo:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: white;
+  }
+  .login-logo p {
+    position: relative;
+    color: #0d3c61;
+    font-size: 1.25rem;
+    font-weight: bolder;
+    margin-bottom: 0;
+  }
+  
+  .form-field {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 1em;
+  }
+  .form-label {
+    font-weight: bolder;
+    font-size: 1rem;
+  }
+  
+  .button-login {
+    width: 100%;
+    background: #113951;
+    border: 2px solid #113951;
+    border-radius: 50px;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: .3s all ease;
+    position: relative;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .button-login::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 2px solid white;
+    border-radius: 50px;
+    pointer-events: none;
+  }
+  
+  .button-login::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border: 2px solid #113951;
+    border-radius: 50px;
+    pointer-events: none;
+  }
+  .border-login-subtle {
+    border: none;
+    border-bottom: 2px solid #113951;
+    width: 80%;
+    margin-top: 10px;
+  }
+  
+  :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    border: 1px solid #113951;
+    border-radius: 10px;
+  }
+  
+  .field-login {
+    width: 100%;
+  }
+  
+  /* .bg-layout {
+    background: no-repeat center/contain url("./assets/images/LayoutLogin.png");
+    background-size: 100% 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  } */
+  
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    width: 100%;
+    max-width: 100%;
+  }
+  .logo-container img {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  
+  @media screen and (max-width: 1200px) {
+    .login-form {
+        width: 90%;
+    }
+  }
+  
+  @media screen and (max-width: 992px) {
+    .logo-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .logo-container img:nth-child(1) {
+      /* Tus estilos aquí */
+      height: 54px;
+      width: 120px;
+  }
+  
+    .logo-container img:nth-child(2) {
+      /* Tus estilos aquí */
+      height: 70px;
+      width: 500px;
+  }
+    .login-wrapper {
+        margin-bottom: 1.5rem;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .login-logo {
+        width: 150px;
+        height: 40px;
+    }
+    .login-logo p {
+        font-size: 1rem;
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .login-form {
+        padding: 1.5em 1em;
+        width: 100%;
+    }
+    .form-content {
+        width: 90%;
+    }
+    .logo-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo-container img {
+        max-width: 45%;
+        height: auto;
+    }
+  }
+  
+  @media screen and (max-width: 360px) {
+    .login-logo {
+        width: 120px;
+        height: 35px;
+    }
+    .login-logo p {
+        font-size: 0.875rem;
+    }
+  }

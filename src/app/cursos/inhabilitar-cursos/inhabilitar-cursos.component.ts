@@ -33,7 +33,7 @@ import { CursosService } from '../../services/cursos.service';
 })
 export class InhabilitarCursosComponent implements OnInit{
 
-  mensaje: string = '';
+  mensaje: string = '¿Esta seguro que desea elimiar el recurso?';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
